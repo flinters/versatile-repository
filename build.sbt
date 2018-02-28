@@ -15,7 +15,6 @@ lazy val root = (project in file(".")).
       "org.skinny-framework" %% "skinny-orm" % "2.5.2",
       "org.scalikejdbc"            %% "scalikejdbc-test"    % "3.1.0" % Test,
       "com.h2database" % "h2" % "1.4.+",
-      "ch.qos.logback" % "logback-classic" % "1.1.+",
-      "jp.co.septeni-original.LIB" %% "solib-nekonote" % "0.1.2"
+      "ch.qos.logback" % "logback-classic" % "1.1.+"
     )
   )
