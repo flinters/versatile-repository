@@ -1,8 +1,11 @@
 package jp.co.septeni_original.versatile.repository
 
 import scala.language.higherKinds
-import scalaz.MonadError
+import scalaz.{Kleisli, MonadError}
 
-trait DeleteFeatureRepository[ID, F[_]] {
-  def deleteBy(id: ID)(implicit me: MonadError[F, Throwable]): F[Unit]
+trait DeleteFeatureRepository[F[_]] {
+  type ID <: Long
+  type Ctx
+
+  def deleteBy(id: ID)(implicit me: MonadError[F, Throwable]): Kleisli[F, Ctx, Unit]
 }

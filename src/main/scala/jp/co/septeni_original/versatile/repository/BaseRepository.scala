@@ -1,12 +1,17 @@
 package jp.co.septeni_original.versatile.repository
 
 import scala.language.higherKinds
-import scalaz.MonadError
+import scalaz.{Kleisli, MonadError}
 
-trait BaseRepository[ID, Entity, F[_]] {
-  def store(entity: Entity)(implicit me: MonadError[F, Throwable]): F[Unit]
+trait BaseRepository[F[_]] {
 
-  def existBy(id: ID)(implicit me: MonadError[F, Throwable]): F[Boolean]
+  type ID <: Long
+  type Entity <: AbstractEntity[ID]
+  type Ctx
+
+  def store(entity: Entity)(implicit me: MonadError[F, Throwable]): Kleisli[F, Ctx, Unit]
+
+  def existBy(id: ID)(implicit me: MonadError[F, Throwable]): Kleisli[F, Ctx, Boolean]
 }
 
 

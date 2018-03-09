@@ -1,8 +1,13 @@
 package jp.co.septeni_original.versatile.repository
 
 import scala.language.higherKinds
-import scalaz.MonadError
+import scalaz.{Kleisli, MonadError}
 
-trait ResolveFeatureRepository[ID, Entity, F[_]] {
-  def resolveBy(id: ID)(implicit me: MonadError[F, Throwable]): F[Option[Entity]]
+trait ResolveFeatureRepository[F[_]] {
+
+  type ID <: Long
+  type Entity <: AbstractEntity[ID]
+  type Ctx
+
+  def resolveBy(id: ID)(implicit me: MonadError[F, Throwable]): Kleisli[F, Ctx, Option[Entity]]
 }
